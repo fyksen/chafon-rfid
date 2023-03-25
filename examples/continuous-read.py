@@ -110,6 +110,12 @@ def read_tags(reader_addr, appender):
             get_inventory_cmd = ReaderCommand(G2_TAG_INVENTORY)
             frame_type = G2InventoryResponseFrame18
             set_power(transport, 13)
+        elif reader_type in (ReaderType.UHFReaderE710, ReaderType.UHFReaderE710):
+            set_answer_mode_reader_288m(transport)
+            get_inventory_cmd = G2InventoryCommand(q_value=4, antenna=0x80)
+            frame_type = G2InventoryResponseFrame
+            set_power(transport, 26)
+            set_buzzer_enabled(transport, False)
         else:
             print('Unsupported reader type: {}'.format(reader_type))
             sys.exit(1)
